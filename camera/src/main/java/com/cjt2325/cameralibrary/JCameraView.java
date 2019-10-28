@@ -424,7 +424,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
                 stopVideo();    //停止播放
                 //初始化VideoView
                 FileUtil.deleteFile(videoUrl);
-                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 machine.start(mVideoView.getHolder(), screenProp);
                 break;
             case TYPE_PICTURE:
@@ -433,7 +433,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             case TYPE_SHORT:
                 break;
             case TYPE_DEFAULT:
-                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT));
+                mVideoView.setLayoutParams(new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.WRAP_CONTENT));
                 break;
         }
         mSwitchCamera.setVisibility(VISIBLE);
