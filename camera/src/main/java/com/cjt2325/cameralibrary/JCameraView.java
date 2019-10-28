@@ -179,7 +179,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             }
         });
         //拍照 录像
-        mCaptureLayout.setCaptureLisenter(new CaptureListener() {
+        mCaptureLayout.setCaptureListener(new CaptureListener() {
             @Override
             public void takePictures() {
                 mSwitchCamera.setVisibility(INVISIBLE);
@@ -226,7 +226,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             }
         });
         //确认 取消
-        mCaptureLayout.setTypeLisenter(new TypeListener() {
+        mCaptureLayout.setTypeListener(new TypeListener() {
             @Override
             public void cancel() {
                 machine.cancle(mVideoView.getHolder(), screenProp);

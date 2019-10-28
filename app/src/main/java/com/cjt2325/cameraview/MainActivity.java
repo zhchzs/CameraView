@@ -34,6 +34,10 @@ public class MainActivity extends AppCompatActivity {
         //设置视频保存路径
         jCameraView.setSaveVideoPath(Environment.getExternalStorageDirectory().getPath() + File.separator + "JCamera");
 
+        //设置只能录像或只能拍照或两种都可以（默认两种都可以）
+        jCameraView.setFeatures(JCameraView.BUTTON_STATE_ONLY_RECORDER);
+        //mJCameraView.setTip("长按拍摄");
+
         //JCameraView监听
         jCameraView.setJCameraLisenter(new JCameraLisenter() {
             @Override

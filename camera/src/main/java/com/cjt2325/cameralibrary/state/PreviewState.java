@@ -73,14 +73,28 @@ class PreviewState implements State {
 
     @Override
     public void stopRecord(final boolean isShort, long time) {
+//        CameraInterface.getInstance().stopRecord(isShort, new CameraInterface.StopRecordCallback() {
+//            @Override
+//            public void recordResult(String url, Bitmap firstFrame) {
+//                if (isShort) {
+//                    machine.getView().resetState(JCameraView.TYPE_SHORT);
+//                } else {
+//                    machine.getView().playVideo(firstFrame, url);
+//                    machine.setState(machine.getBorrowVideoState());
+//                }
+//            }
+//        });
+
         CameraInterface.getInstance().stopRecord(isShort, new CameraInterface.StopRecordCallback() {
             @Override
             public void recordResult(String url, Bitmap firstFrame) {
                 if (isShort) {
                     machine.getView().resetState(JCameraView.TYPE_SHORT);
                 } else {
-                    machine.getView().playVideo(firstFrame, url);
-                    machine.setState(machine.getBorrowVideoState());
+                    if (CameraInterface.getInstance().getSurfaceHolder() != null) {
+                        machine.getView().playVideo(firstFrame, url);
+                        machine.setState(machine.getBorrowVideoState());
+                    }
                 }
             }
         });

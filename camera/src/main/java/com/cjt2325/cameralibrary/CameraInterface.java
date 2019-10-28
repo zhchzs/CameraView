@@ -777,4 +777,9 @@ public class CameraInterface implements Camera.PreviewCallback {
     void isPreview(boolean res) {
         this.isPreviewing = res;
     }
+
+    //点击录像
+    public SurfaceHolder getSurfaceHolder() {
+        return mHolder;
+    }
 }
