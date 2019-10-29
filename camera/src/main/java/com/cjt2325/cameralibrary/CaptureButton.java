@@ -7,6 +7,7 @@ import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
+import android.graphics.Path;
 import android.graphics.RectF;
 import android.os.CountDownTimer;
 import android.os.Handler;
@@ -50,6 +51,7 @@ public class CaptureButton extends View {
 
 
     private Paint mPaint;
+    private Path path;
 
     private float strokeWidth;          //进度条宽度
     private int outside_add_size;       //长按外圆半径变大的Size
@@ -82,17 +84,18 @@ public class CaptureButton extends View {
     public CaptureButton(Context context, int size) {
         super(context);
         this.button_size = size;
-        button_radius = size / 2.0f;
+        button_radius = size / 2.5f;
 
         button_outside_radius = button_radius;
         button_inside_radius = button_radius * 0.75f;
 
-        strokeWidth = size / 15;
+        strokeWidth = size / 50f;
         outside_add_size = size / 5;
         inside_reduce_size = size / 8;
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
+        path = new Path();
 
         progress = 0;
         longPressRunnable = new LongPressRunnable();
@@ -107,11 +110,13 @@ public class CaptureButton extends View {
         center_X = (button_size + outside_add_size * 2) / 2;
         center_Y = (button_size + outside_add_size * 2) / 2;
 
-        rectF = new RectF(
-                center_X - (button_radius + outside_add_size - strokeWidth / 2),
-                center_Y - (button_radius + outside_add_size - strokeWidth / 2),
-                center_X + (button_radius + outside_add_size - strokeWidth / 2),
-                center_Y + (button_radius + outside_add_size - strokeWidth / 2));
+//        rectF = new RectF(
+//                center_X - (button_radius + outside_add_size - strokeWidth / 2),
+//                center_Y - (button_radius + outside_add_size - strokeWidth / 2),
+//                center_X + (button_radius + outside_add_size - strokeWidth / 2),
+//                center_Y + (button_radius + outside_add_size - strokeWidth / 2));
+
+        rectF = new RectF(center_X - button_radius / 2, center_Y - button_radius / 2, center_X + button_radius / 2, center_Y + button_radius / 2);
 
         timer = new RecordCountDownTimer(duration, duration / 360);    //录制定时器
     }
@@ -125,20 +130,43 @@ public class CaptureButton extends View {
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        //外圆
+        mPaint.setColor(0xFFFCA001);
         mPaint.setStyle(Paint.Style.FILL);
-
-        mPaint.setColor(outside_color); //外圆（半透明灰色）
-        canvas.drawCircle(center_X, center_Y, button_outside_radius, mPaint);
-
-        mPaint.setColor(inside_color);  //内圆（白色）
-        canvas.drawCircle(center_X, center_Y, button_inside_radius, mPaint);
+        canvas.drawCircle(center_X, center_Y, button_radius, mPaint);
+        //内环
+        mPaint.setStyle(Paint.Style.STROKE);
+        mPaint.setColor(0xFFFFFFFF);
+        mPaint.setStrokeWidth(strokeWidth);
+        canvas.drawArc(rectF, 0, 360, false, mPaint);
+        //三角
+        mPaint.setStyle(Paint.Style.FILL);
+        path.reset();
+        path.moveTo(center_X - button_radius / 5 + 5, center_Y - button_radius / 5);
+        path.lineTo(center_X - button_radius / 5 + 5, center_Y + button_radius / 5);
+        path.lineTo(center_X + button_radius / 5, center_Y);
+        path.close();
+        canvas.drawPath(path, mPaint);
 
         //如果状态为录制状态，则绘制录制进度条
         if (state == STATE_RECORDERING) {
-            mPaint.setColor(progress_color);
-            mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setStrokeWidth(strokeWidth);
-            canvas.drawArc(rectF, -90, progress, false, mPaint);
+//            mPaint.setColor(progress_color);
+//            mPaint.setStyle(Paint.Style.STROKE);
+//            mPaint.setStrokeWidth(strokeWidth);
+//            canvas.drawArc(rectF, -90, progress, false, mPaint);
+            //矩形
+            mPaint.setStyle(Paint.Style.FILL);
+            path.reset();
+            path.moveTo(center_X - button_radius / 5 + 5, center_Y - button_radius / 5);
+            path.lineTo(center_X - button_radius / 5 + 5, center_Y + button_radius / 5);
+            path.lineTo(center_X + button_radius / 5, center_Y);
+            path.close();
+            canvas.drawRect(
+                    center_X - button_radius / 5 + 5,
+                    center_Y - button_radius / 5,
+                    center_X + button_radius / 5,
+                    center_Y + button_radius / 5,
+                    mPaint);
         }
     }
 
@@ -187,8 +215,6 @@ public class CaptureButton extends View {
 
     //当手指松开按钮时候处理的逻辑
     private void handlerUnpressByState() {
-        System.out.println("111111111 = " + 111111111);
-
         removeCallbacks(longPressRunnable); //移除长按逻辑的Runnable
         //根据当前状态处理
         switch (state) {

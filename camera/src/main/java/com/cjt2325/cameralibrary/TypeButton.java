@@ -2,7 +2,6 @@ package com.cjt2325.cameralibrary;
 
 import android.content.Context;
 import android.graphics.Canvas;
-import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.graphics.RectF;
@@ -16,7 +15,7 @@ import android.view.View;
  * 描    述：拍照或录制完成后弹出的确认和返回按钮
  * =====================================
  */
-public class TypeButton extends View{
+public class TypeButton extends View {
     public static final int TYPE_CANCEL = 0x001;
     public static final int TYPE_CONFIRM = 0x002;
     private int button_type;
@@ -41,7 +40,7 @@ public class TypeButton extends View{
         super(context);
         this.button_type = type;
         button_size = size;
-        button_radius = size / 2.0f;
+        button_radius = size / 2.5f;
         center_X = size / 2.0f;
         center_Y = size / 2.0f;
 
@@ -49,7 +48,7 @@ public class TypeButton extends View{
         path = new Path();
         strokeWidth = size / 50f;
         index = button_size / 12f;
-        rectF = new RectF(center_X, center_Y - index, center_X + index * 2, center_Y + index);
+        rectF = new RectF(center_X - button_radius / 2, center_Y - button_radius / 2, center_X + button_radius / 2, center_Y + button_radius / 2);
     }
 
     @Override
@@ -64,45 +63,47 @@ public class TypeButton extends View{
         //如果类型为取消，则绘制内部为返回箭头
         if (button_type == TYPE_CANCEL) {
             mPaint.setAntiAlias(true);
-            mPaint.setColor(0xEEDCDCDC);
-            mPaint.setStyle(Paint.Style.FILL);
+            mPaint.setColor(0xFFFCA001);
+            mPaint.setStyle(Paint.Style.STROKE);
+            mPaint.setStrokeWidth(5);
             canvas.drawCircle(center_X, center_Y, button_radius, mPaint);
 
-            mPaint.setColor(Color.BLACK);
+            mPaint.setColor(0xFFFCA001);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setStrokeWidth(strokeWidth);
 
-            path.moveTo(center_X - index / 7, center_Y + index);
-            path.lineTo(center_X + index, center_Y + index);
-
-            path.arcTo(rectF, 90, -180);
-            path.lineTo(center_X - index, center_Y - index);
-            canvas.drawPath(path, mPaint);
+            canvas.drawArc(rectF, 150, -320, false, mPaint);
             mPaint.setStyle(Paint.Style.FILL);
             path.reset();
-            path.moveTo(center_X - index, (float) (center_Y - index * 1.5));
-            path.lineTo(center_X - index, (float) (center_Y - index / 2.3));
-            path.lineTo((float) (center_X - index * 1.6), center_Y - index);
-            path.close();
-            canvas.drawPath(path, mPaint);
 
+            canvas.drawLine(
+                    center_X + rectF.width() / 2 * (float) Math.sin(280 * Math.PI / 180) - 2,
+                    center_Y - rectF.width() / 2 * (float) Math.cos(280 * Math.PI / 180),
+                    center_X + rectF.width() / 2 * (float) Math.sin(280 * Math.PI / 180) - 2,
+                    center_Y - rectF.width() / 2 * (float) Math.cos(280 * Math.PI / 180) - 34,
+                    mPaint);
+            canvas.drawLine(
+                    center_X + rectF.width() / 2 * (float) Math.sin(280 * Math.PI / 180),
+                    center_Y - rectF.width() / 2 * (float) Math.cos(280 * Math.PI / 180) - 2,
+                    center_X + rectF.width() / 2 * (float) Math.sin(280 * Math.PI / 180) + 26,
+                    center_Y - rectF.width() / 2 * (float) Math.cos(280 * Math.PI / 180) - 2,
+                    mPaint);
         }
         //如果类型为确认，则绘制绿色勾
         if (button_type == TYPE_CONFIRM) {
             mPaint.setAntiAlias(true);
-            mPaint.setColor(0xFFFFFFFF);
+            mPaint.setColor(0xFFFCA001);
             mPaint.setStyle(Paint.Style.FILL);
             canvas.drawCircle(center_X, center_Y, button_radius, mPaint);
             mPaint.setAntiAlias(true);
             mPaint.setStyle(Paint.Style.STROKE);
-            mPaint.setColor(0xFF00CC00);
+            mPaint.setColor(0xFFFFFFFF);
             mPaint.setStrokeWidth(strokeWidth);
+            canvas.drawArc(rectF, 0, 360, false, mPaint);
 
-            path.moveTo(center_X - button_size / 6f, center_Y);
-            path.lineTo(center_X - button_size / 21.2f, center_Y + button_size / 7.7f);
-            path.lineTo(center_X + button_size / 4.0f, center_Y - button_size / 8.5f);
-            path.lineTo(center_X - button_size / 21.2f, center_Y + button_size / 9.4f);
-            path.close();
+            path.moveTo(center_X - rectF.width() / 4, center_Y);
+            path.lineTo(center_X - 5, center_Y + rectF.width() / 5);
+            path.lineTo(center_X + rectF.width() / 3 - 6, center_Y - rectF.width() / 5 + 6);
             canvas.drawPath(path, mPaint);
         }
     }

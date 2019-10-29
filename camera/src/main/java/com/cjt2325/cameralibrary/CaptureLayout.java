@@ -196,7 +196,7 @@ public class CaptureLayout extends FrameLayout {
         btn_cancel = new TypeButton(getContext(), TypeButton.TYPE_CANCEL, button_size);
         final LayoutParams btn_cancel_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_cancel_param.gravity = Gravity.CENTER_VERTICAL;
-        btn_cancel_param.setMargins((layout_width / 4) - button_size / 2, 0, 0, 0);
+        btn_cancel_param.setMargins((layout_width / 4) - button_size / 2 + 20, 0, 0, 0);
         btn_cancel.setLayoutParams(btn_cancel_param);
         btn_cancel.setOnClickListener(new OnClickListener() {
             @Override
@@ -213,7 +213,7 @@ public class CaptureLayout extends FrameLayout {
         btn_confirm = new TypeButton(getContext(), TypeButton.TYPE_CONFIRM, button_size);
         LayoutParams btn_confirm_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_confirm_param.gravity = Gravity.CENTER_VERTICAL | Gravity.RIGHT;
-        btn_confirm_param.setMargins(0, 0, (layout_width / 4) - button_size / 2, 0);
+        btn_confirm_param.setMargins(0, 0, (layout_width / 4) - button_size / 2 + 20, 0);
         btn_confirm.setLayoutParams(btn_confirm_param);
         btn_confirm.setOnClickListener(new OnClickListener() {
             @Override
