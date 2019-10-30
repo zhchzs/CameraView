@@ -6,8 +6,9 @@
     android:orientation="vertical">
 
     <FrameLayout
+        android:id="@+id/video_layout"
         android:layout_width="match_parent"
-        android:layout_height="500dp"
+        android:layout_height="match_parent"
         android:background="#d8d8d8">
 
         <VideoView

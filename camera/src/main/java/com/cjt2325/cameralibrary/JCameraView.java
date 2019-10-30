@@ -84,6 +84,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private ClickListener rightClickListener;
 
     private Context mContext;
+    private FrameLayout videoLayout;
     private VideoView mVideoView;
     private ImageView mPhoto;
     private ImageView mSwitchCamera;
@@ -151,6 +152,9 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
     private void initView() {
         setWillNotDraw(false);
         View view = LayoutInflater.from(mContext).inflate(R.layout.camera_view, this);
+        videoLayout = (FrameLayout) view.findViewById(R.id.video_layout);
+        videoLayout.getLayoutParams().height = ScreenUtils.getScreenHeight(mContext) / 5 * 4;
+
         mVideoView = (VideoView) view.findViewById(R.id.video_preview);
         mPhoto = (ImageView) view.findViewById(R.id.image_photo);
         mSwitchCamera = (ImageView) view.findViewById(R.id.image_switch);

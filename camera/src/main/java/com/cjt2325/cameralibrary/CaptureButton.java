@@ -118,7 +118,7 @@ public class CaptureButton extends View {
 
         rectF = new RectF(center_X - button_radius / 2, center_Y - button_radius / 2, center_X + button_radius / 2, center_Y + button_radius / 2);
 
-        timer = new RecordCountDownTimer(duration, duration / 360);    //录制定时器
+        timer = new RecordCountDownTimer(duration, 1);    //录制定时器
     }
 
     @Override
@@ -229,7 +229,6 @@ public class CaptureButton extends View {
 //                break;
             //当前是长按状态
             case STATE_RECORDERING:
-                System.out.println("state ======================= " + state);
                 timer.cancel(); //停止计时器
                 recordEnd();    //录制结束
                 break;
@@ -328,8 +327,11 @@ public class CaptureButton extends View {
 
     //更新进度条
     private void updateProgress(long millisUntilFinished) {
+        System.out.println("millisUntilFinished = " + millisUntilFinished / 1000f + "s");
+
         recorded_time = (int) (duration - millisUntilFinished);
         progress = 360f - millisUntilFinished / (float) duration * 360f;
+        System.out.println("recorded_time = " + recorded_time / 1000 + "s");
         invalidate();
     }
 
