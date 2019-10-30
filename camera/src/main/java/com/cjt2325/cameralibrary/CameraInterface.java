@@ -494,7 +494,9 @@ public class CameraInterface implements Camera.PreviewCallback {
         });
     }
 
-    //启动录像
+    /**
+     * 启动录像
+     */
     public void startRecord(Surface surface, float screenProp, ErrorCallback callback) {
         mCamera.setPreviewCallback(null);
         final int nowAngle = (angle + 90) % 360;

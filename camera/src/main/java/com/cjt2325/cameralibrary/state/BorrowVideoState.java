@@ -36,9 +36,7 @@ public class BorrowVideoState implements State {
 
     @Override
     public void foucs(float x, float y, CameraInterface.FocusCallback callback) {
-
     }
-
 
     @Override
     public void swtich(SurfaceHolder holder, float screenProp) {
@@ -62,7 +60,6 @@ public class BorrowVideoState implements State {
 
     @Override
     public void stopRecord(boolean isShort, long time) {
-
     }
 
     @Override

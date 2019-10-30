@@ -34,7 +34,6 @@ public class BorrowPictureState implements State {
 
     }
 
-
     @Override
     public void foucs(float x, float y, CameraInterface.FocusCallback callback) {
     }
@@ -55,7 +54,7 @@ public class BorrowPictureState implements State {
     }
 
     @Override
-    public void record(Surface surface,float screenProp) {
+    public void record(Surface surface, float screenProp) {
 
     }
 
@@ -85,5 +84,4 @@ public class BorrowPictureState implements State {
     public void flash(String mode) {
 
     }
-
 }

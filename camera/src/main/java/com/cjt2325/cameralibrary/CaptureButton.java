@@ -194,7 +194,8 @@ public class CaptureButton extends View {
 //                if ((button_state == BUTTON_STATE_ONLY_RECORDER || button_state == BUTTON_STATE_BOTH))
 //                    postDelayed(longPressRunnable, 500);    //同时延长500启动长按后处理的逻辑Runnable
                 if ((button_state == BUTTON_STATE_ONLY_RECORDER || button_state == BUTTON_STATE_BOTH)) {
-                    handler.postDelayed(longPressRunnable, 500);    //同时延长500启动长按后处理的逻辑Runnable
+//                    handler.postDelayed(longPressRunnable, 0);    //同时延长500启动长按后处理的逻辑Runnable
+                    handler.post(longPressRunnable);    //同时延长500启动长按后处理的逻辑Runnable
                 }
                 break;
             case MotionEvent.ACTION_MOVE:
@@ -252,12 +253,13 @@ public class CaptureButton extends View {
         progress = 0;       //重制进度
         invalidate();
         //还原按钮初始状态动画
-        startRecordAnimation(
-                button_outside_radius,
-                button_radius,
-                button_inside_radius,
-                button_radius * 0.75f
-        );
+//        startRecordAnimation(
+//                button_outside_radius,
+//                button_radius,
+//                button_inside_radius,
+//                button_radius * 0.75f
+//        );
+        startRecord();
     }
 
     //内圆动画
@@ -309,21 +311,25 @@ public class CaptureButton extends View {
             @Override
             public void onAnimationEnd(Animator animation) {
                 super.onAnimationEnd(animation);
-                //设置为录制状态
-//                if (state == STATE_LONG_PRESS) {
-                if (state == STATE_PRESS) {
-                    if (captureListener != null) {
-                        captureListener.recordStart();
-                        captureListener.remainingTime(duration / 1000f);
-                    }
-                    state = STATE_RECORDERING;
-                    timer.start();
-                }
+                startRecord();
             }
         });
         set.playTogether(outside_anim, inside_anim);
         set.setDuration(100);
         set.start();
+    }
+
+    private void startRecord() {
+        //设置为录制状态
+//                if (state == STATE_LONG_PRESS) {
+        if (state == STATE_PRESS) {
+            if (captureListener != null) {
+                captureListener.recordStart();
+                captureListener.remainingTime(duration / 1000f);
+            }
+            state = STATE_RECORDERING;
+            timer.start();
+        }
     }
 
 
@@ -371,12 +377,13 @@ public class CaptureButton extends View {
                 }
             }
             //启动按钮动画，外圆变大，内圆缩小
-            startRecordAnimation(
-                    button_outside_radius,
-                    button_outside_radius + outside_add_size,
-                    button_inside_radius,
-                    button_inside_radius - inside_reduce_size
-            );
+//            startRecordAnimation(
+//                    button_outside_radius,
+//                    button_outside_radius + outside_add_size,
+//                    button_inside_radius,
+//                    button_inside_radius - inside_reduce_size
+//            );
+            startRecord();
         }
     }
 
