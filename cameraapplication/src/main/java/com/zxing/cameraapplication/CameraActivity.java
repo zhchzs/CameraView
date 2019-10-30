@@ -74,6 +74,11 @@ public class CameraActivity extends AppCompatActivity {
                 setResult(101, intent);
                 finish();
             }
+
+            @Override
+            public void remainingTime(float time) {
+                System.out.println("CameraActivity.remainingTime===========" + time + "s");
+            }
         });
 
         jCameraView.setLeftClickListener(new ClickListener() {

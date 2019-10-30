@@ -144,7 +144,7 @@ public class CaptureLayout extends FrameLayout {
         LayoutParams btn_capture_param = new LayoutParams(LayoutParams.MATCH_PARENT, LayoutParams.MATCH_PARENT);
         btn_capture_param.gravity = Gravity.CENTER;
         btn_capture.setLayoutParams(btn_capture_param);
-        btn_capture.setCaptureLisenter(new CaptureListener() {
+        btn_capture.setCaptureListener(new CaptureListener() {
             @Override
             public void takePictures() {
                 if (captureListener != null) {
@@ -188,6 +188,13 @@ public class CaptureLayout extends FrameLayout {
             public void recordError() {
                 if (captureListener != null) {
                     captureListener.recordError();
+                }
+            }
+
+            @Override
+            public void remainingTime(float time) {
+                if (captureListener != null) {
+                    captureListener.remainingTime(time);
                 }
             }
         });

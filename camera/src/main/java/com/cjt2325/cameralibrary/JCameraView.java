@@ -153,7 +153,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         setWillNotDraw(false);
         View view = LayoutInflater.from(mContext).inflate(R.layout.camera_view, this);
         videoLayout = (FrameLayout) view.findViewById(R.id.video_layout);
-        videoLayout.getLayoutParams().height = ScreenUtils.getScreenHeight(mContext) / 5 * 4;
+        videoLayout.getLayoutParams().height = ScreenUtils.getScreenHeight(mContext) / 4 * 3;
 
         mVideoView = (VideoView) view.findViewById(R.id.video_preview);
         mPhoto = (ImageView) view.findViewById(R.id.image_photo);
@@ -226,6 +226,13 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
             public void recordError() {
                 if (errorLisenter != null) {
                     errorLisenter.AudioPermissionError();
+                }
+            }
+
+            @Override
+            public void remainingTime(float time) {
+                if (jCameraLisenter != null) {
+                    jCameraLisenter.remainingTime(time);
                 }
             }
         });
