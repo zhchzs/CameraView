@@ -162,7 +162,7 @@ public class CaptureButton extends View {
             path.lineTo(center_X + button_radius / 5, center_Y);
             path.close();
             canvas.drawRect(
-                    center_X - button_radius / 5 + 5,
+                    center_X - button_radius / 5,
                     center_Y - button_radius / 5,
                     center_X + button_radius / 5,
                     center_Y + button_radius / 5,
