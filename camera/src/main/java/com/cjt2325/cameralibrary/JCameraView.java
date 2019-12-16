@@ -153,7 +153,7 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         setWillNotDraw(false);
         View view = LayoutInflater.from(mContext).inflate(R.layout.camera_view, this);
         videoLayout = (FrameLayout) view.findViewById(R.id.video_layout);
-        videoLayout.getLayoutParams().height = ScreenUtils.getScreenHeight(mContext) / 4 * 3;
+//        videoLayout.getLayoutParams().height = ScreenUtils.getScreenHeight(mContext) / 5 * 3;
 
         mVideoView = (VideoView) view.findViewById(R.id.video_preview);
         mPhoto = (ImageView) view.findViewById(R.id.image_photo);
