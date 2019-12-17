@@ -139,6 +139,8 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         a.recycle();
         initData();
         initView();
+        //取消提示音
+        mute();
     }
 
     private void initData() {
@@ -275,11 +277,24 @@ public class JCameraView extends FrameLayout implements CameraInterface.CameraOp
         });
     }
 
+    private void mute() {
+        //取消提示音
+        AudioManager audioManager = (AudioManager) mContext.getSystemService(Context.AUDIO_SERVICE);
+        audioManager.setStreamMute(AudioManager.STREAM_SYSTEM, true);
+        audioManager.setStreamMute(AudioManager.STREAM_MUSIC, true);
+        audioManager.setStreamVolume(AudioManager.STREAM_ALARM, 0, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_DTMF, 0, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_NOTIFICATION, 0, 0);
+        audioManager.setStreamVolume(AudioManager.STREAM_RING, 0, 0);
+    }
+
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         float widthSize = mVideoView.getMeasuredWidth();
         float heightSize = mVideoView.getMeasuredHeight();
+        System.out.println(String.format("MakeSure mVideoView :w = %f h = %f", widthSize, heightSize));
+
         if (screenProp == 0) {
             screenProp = heightSize / widthSize;
         }
