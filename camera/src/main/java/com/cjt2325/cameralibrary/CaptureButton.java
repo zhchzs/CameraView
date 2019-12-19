@@ -335,15 +335,12 @@ public class CaptureButton extends View {
 
     //更新进度条
     private void updateProgress(long millisUntilFinished) {
-        System.out.println("millisUntilFinished = " + ((duration - millisUntilFinished) / 1000f));
-
         if (captureListener != null) {
-//            captureListener.remainingTime(millisUntilFinished / 1000f);
-            captureListener.remainingTime((duration - millisUntilFinished) / 1000f);
+            captureListener.remainingTime(millisUntilFinished / 1000f);//倒计时
+//            captureListener.remainingTime((duration - millisUntilFinished) / 1000f);//正计时
         }
 
         recorded_time = (int) (duration - millisUntilFinished);
-//        recorded_time = (int) (duration - millisUntilFinished);
         progress = 360f - millisUntilFinished / (float) duration * 360f;
         invalidate();
     }
